@@ -15,9 +15,18 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/boards")
 public class BoardController {
+
+  private final BoardService boardService;
+
+  @GetMapping
+  public ResponseEntity<?> getBoardList() {
+    String[] boardList = this.boardService.getBoardList();
+    return ResponseEntity.status(200).body(boardList);
+  }
+
   @GetMapping("/{boardId}")
   public ResponseEntity<?> getBoardInfo(@PathVariable Integer boardId) {
-    String boardInfo = "board ID : " + boardId.toString();
+    String boardInfo = this.boardService.getBoard(boardId);
     return ResponseEntity.status(200).body(boardInfo);
   }
 

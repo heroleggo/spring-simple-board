@@ -14,7 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/posts")
 public class PostController {
-  final private String[] posts = new String[]{
+  private final PostService postService;
+  private final String[] posts = new String[]{
       "post1",
       "post2",
       "post3"
@@ -35,6 +36,7 @@ public class PostController {
 
   @PostMapping
   public ResponseEntity<?> saveNewPost(@RequestBody CreatePostDto body) {
+    this.postService.createPost(body.getName());
     System.out.println(body.getName());
     return ResponseEntity.status(201).body("Created");
   }

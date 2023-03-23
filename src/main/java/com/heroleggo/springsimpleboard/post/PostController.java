@@ -26,12 +26,16 @@ public class PostController {
     return ResponseEntity.status(200).body(this.posts);
   }
 
+  @GetMapping("/boards/{boardId}")
+  public ResponseEntity<?> getPostListByBoardId(@PathVariable String boardId) {
+    String[] postList = this.postService.getPostListByBoardId(boardId);
+    return ResponseEntity.status(200).body(postList);
+  }
+
   @GetMapping("/{postId}")
   public ResponseEntity<?> getPostByPostId(@PathVariable Integer postId) {
-    if (postId < this.posts.length) {
-      return ResponseEntity.status(200).body(this.posts[postId]);
-    }
-    return ResponseEntity.status(404).body("Not Found");
+    String post = this.postService.getPostByPostId(postId);
+    return ResponseEntity.status(200).body(post);
   }
 
   @PostMapping
